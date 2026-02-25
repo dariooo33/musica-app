@@ -88,4 +88,14 @@ class AlbumController extends Controller
         }
     }
 
+    public function search(Request $request): View
+    {
+        $query = Album::query();
+        // Aplica aquí los filtros con when()
+        $albums = $query->paginate(10)->withQueryString();
+        $genres = Album::distinct()->orderBy('genre')->pluck('genre');
+        return view('albums.search', compact('albums', 'genres'));
+    }
+
+    
 }
